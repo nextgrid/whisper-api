@@ -20,4 +20,6 @@ WORKDIR /app
 COPY . /app
 RUN poetry install
 
+EXPOSE 8000
+
 CMD ["poetry", "run", "whisper_asr"]
