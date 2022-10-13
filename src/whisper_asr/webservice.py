@@ -134,4 +134,4 @@ def load_audio(file: BinaryIO, sr: int = SAMPLE_RATE):
 
 
 def start():
-    uvicorn.run(app, host="0.0.0.0", port=80, log_level="info")
+    uvicorn.run(app, host="0.0.0.0", port=5000, log_level="info")
