@@ -27,9 +27,9 @@ For English-only applications, the `.en` models tend to perform better, especial
 docker build -t whisper .
 
 # Run Container
-docker run -p 80:80 whisper
+docker run -p 8000:8000 whisper
 # or
-docker run -p 80:80 -e ASR_MODEL=base whisper
+docker run -p 8000:8000 -e ASR_MODEL=base whisper
 ```
 
 ### For GPU
@@ -38,9 +38,9 @@ docker run -p 80:80 -e ASR_MODEL=base whisper
 docker build -f Dockerfile.gpu -t whisper-gpu .
 
 # Run Container
-docker run -gpus all -p 80:80 whisper-gpu
+docker run -gpus all -p 8000:8000 whisper-gpu
 # or
-docker run --gpus all -p 80:80 -e ASR_MODEL=base whisper-gpu
+docker run --gpus all -p 8000:8000 -e ASR_MODEL=base whisper-gpu
 
 ```
 ## Automatic Speech recognition service /asr
