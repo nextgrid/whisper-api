@@ -30,7 +30,16 @@ docker build -t whisper .
 docker run -p 8000:8000 whisper
 # or
 docker run -p 8000:8000 -e ASR_MODEL=base whisper
+# or
+docker run \
+  --volume /var/lib/nvidia/lib64:/usr/local/nvidia/lib64 \
+  --volume /var/lib/nvidia/bin:/usr/local/nvidia/bin \
+  --device /dev/nvidia0:/dev/nvidia0 \
+  --device /dev/nvidia-uvm:/dev/nvidia-uvm \
+  --device /dev/nvidiactl:/dev/nvidiactl \
+-p 80:8000 -d whisper-gpu
 ```
+
 
 ### For GPU
 ```sh

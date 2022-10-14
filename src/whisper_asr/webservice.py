@@ -11,12 +11,23 @@ import numpy as np
 from io import StringIO
 from threading import Lock
 import torch
+from fastapi.middleware.cors import CORSMiddleware
 
 SAMPLE_RATE=16000
 
 app = FastAPI()
 
-model_name= os.getenv("ASR_MODEL", "base")
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+model_name= os.getenv("ASR_MODEL", "small")
 
 if torch.cuda.is_available():
     model = whisper.load_model(model_name).cuda()
