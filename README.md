@@ -1,7 +1,74 @@
-# Whisper
-Whisper is a general-purpose speech recognition model. It is trained on a large dataset of diverse audio and is also a multi-task model that can perform multilingual speech recognition as well as speech translation and language identification. For more details: [github.com/openai/whisper](https://github.com/openai/whisper/)
+[![Artificial Intelligence Hackathons, tutorials and Boilerplates](https://storage.googleapis.com/lablab-static-eu/images/github/lablab-banner.jpg)](https://lablab.ai)
+This is a free to use hosted version of OpenAI Whisper model.   
 
-## Run (Docker Hub)
+# Whisper
+### Whisper is a general-purpose speech recognition model. It is trained on a large dataset of diverse audio and is also a multi-task model that can perform multilingual speech recognition as well as speech translation and language identification. For more details: [github.com/openai/whisper](https://github.com/openai/whisper/)
+
+---
+
+### Table of content
+1. [How to use our API](https://github.com/nextgrid/whisper-api/edit/main/README.md#how-to-deploy-your-own-api)
+2. [How to deploy your own API](https://github.com/nextgrid/whisper-api/edit/main/README.md#how-to-deploy-your-own-api)
+
+
+## How to use our Whisper API
+Access swagger documentation at https://whisper.lablab.ai/docs and https://whisper.lablab.ai/redoc
+
+
+### Python:
+```
+import requests
+url = "https://whisper.lablab.ai/asr"
+payload={}
+files=[
+  ('audio_file',('test1.mp3',open('/C:/Users/pc/Desktop/test1.mp3','rb'),'audio/mpeg'))
+]
+response = requests.request("POST", url, data=payload, files=files)
+print(response.text)
+```
+
+### JS/Node:
+```
+var formdata = new FormData();formdata.append("audio_file", fileInput.files[0], "/C:/Users/pc/Desktop/test1.mp3");
+var requestOptions = {
+  method: 'POST',
+  body: formdata,
+  redirect: 'follow'
+};
+fetch("https://whisper.lablab.ai/asr", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+``` 
+ 
+### C#:
+```
+var client = new RestClient("https://whisper.lablab.ai/asr");
+client.Timeout = -1;
+var request = new RestRequest(Method.POST);
+request.AddFile("audio_file", "/C:/Users/pc/Desktop/test1.mp3");
+IRestResponse response = client.Execute(request);
+Console.WriteLine(response.Content);
+```
+ 
+### Dart:
+```
+var request = http.MultipartRequest('POST', Uri.parse('https://whisper.lablab.ai/asr'));
+request.files.add(await http.MultipartFile.fromPath('audio_file', '/C:/Users/pc/Desktop/test1.mp3'));
+ 
+http.StreamedResponse response = await request.send();
+ 
+if (response.statusCode == 200) {
+  print(await response.stream.bytesToString());
+}
+else {
+  print(response.reasonPhrase);
+}
+```
+
+## How to deploy your own API 
+
+### Run (Docker Hub)
 For CPU: https://hub.docker.com/r/onerahmet/openai-whisper-asr-webservice
 ```sh
 docker run -d -p 9000:9000 -e ASR_MODEL=base onerahmet/openai-whisper-asr-webservice
@@ -19,9 +86,8 @@ Available ASR_MODELs are `tiny`, `base`, `small`, `medium` and `large`
 For English-only applications, the `.en` models tend to perform better, especially for the `tiny.en` and `base.en` models. We observed that the difference becomes less significant for the `small.en` and `medium.en` models.
 
 
-
-## Docker Build
-### For CPU
+### Docker Build
+#### For CPU
 ```sh
 # Build Image
 docker build -t whisper .
